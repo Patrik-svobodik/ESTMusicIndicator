@@ -45,22 +45,27 @@ class ESTMusicIndicatorContentView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        commonInit()
+    }
+    
+    convenience init() {
+        self.init(frame: CGRect.zero)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         translatesAutoresizingMaskIntoConstraints = false
         prepareBarLayers()
         tintColorDidChange()
         setNeedsUpdateConstraints()
     }
     
-    convenience init() {
-        self.init(frame:CGRect.zero)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     private func prepareBarLayers() {
-        var xOffset:CGFloat = 0.0
+        var xOffset: CGFloat = 0.0
         
         for i in 1...kBarCount {
             let newLayer = createBarLayerWithXOffset(xOffset, layerIndex: i)
@@ -93,7 +98,7 @@ class ESTMusicIndicatorContentView: UIView {
     }
     
     override var intrinsicContentSize : CGSize {
-        var unionFrame:CGRect = CGRect.zero
+        var unionFrame = CGRect.zero
         
         for layer in barLayers {
             unionFrame = unionFrame.union(layer.frame)
@@ -175,7 +180,7 @@ class ESTMusicIndicatorContentView: UIView {
         animation.repeatCount = Float.infinity // Forever
         animation.autoreverses = true
         animation.duration = TimeInterval((CGFloat(basePeriod) / 2) * (kBarMaxPeakHeight / peakHeight))
-        animation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseIn)
+        animation.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeIn)
         
         layer.add(animation, forKey: kOscillationAnimationKey)
     }
@@ -188,7 +193,7 @@ class ESTMusicIndicatorContentView: UIView {
         }
         animation.toValue = NSValue(cgRect:layer.bounds)
         animation.duration = kDecayDuration
-        animation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseOut)
+        animation.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeOut)
         
         layer.add(animation, forKey: kDecayAnimationKey)
     }

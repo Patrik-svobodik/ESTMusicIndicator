@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name         = "ESTMusicIndicator"
-  s.version      = "0.2.0"
-  s.swift_version = "4.0"
+  s.version      = "0.3.0"
+  s.swift_version = "5.0"
   s.summary      = "Cool Animated music indicator view written in Swift."
 
   s.description  = <<-DESC
@@ -16,10 +16,10 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author             = { "Aufree" => "freedomlijinfa@gmail.com" }
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "10.0"
 
   s.source       = { :git => "https://github.com/Aufree/ESTMusicIndicator.git", :tag => s.version }
 
-  s.source_files  = "Classes/**/*.swift"
+  s.source_files  = "Sources/ESTMusicIndicator/**/*.swift"
   s.frameworks = 'QuartzCore'
 end
