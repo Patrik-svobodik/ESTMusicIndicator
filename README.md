@@ -42,6 +42,12 @@ $ open Example/ESTMusicIndicator.xcodeproj
 
 ## Installation
 
+### Swift Package Manager
+SPM is a dependency manager built into Xcode.
+
+ESTMusicIndicator can be installed via Swift Package Manager. To use it in your project, open Xcode, go to menu File -> Swift Packages -> Add Package Dependency, and paste this repo's URL:
+`https://github.com/Aufree/ESTMusicIndicator.git`
+
 ### CocoaPods
 
 CocoaPods is a dependency manager for Cocoa projects.
