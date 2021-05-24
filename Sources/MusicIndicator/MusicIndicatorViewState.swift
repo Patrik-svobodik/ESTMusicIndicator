@@ -1,6 +1,6 @@
 //
-//  ESTMusicIndicatorView.swift
-//  ESTMusicIndicator
+//  MusicIndicatorView.swift
+//  MusicIndicator
 //
 //  Created by Aufree on 12/6/15.
 //  Copyright © 2015 The EST Group. All rights reserved.
@@ -26,13 +26,13 @@
 import Foundation
 
 /**
- Values for the [state]([ESTMusicIndicatorView state]) property.
+ Values for the ` \.state` property.
  */
-public enum ESTMusicIndicatorViewState: Int {
+public enum MusicIndicatorViewState: Int {
      /**
      Stopped state of an indicator view.
-     In this state, if an indicator's [hidesWhenStopped]([ESTMusicIndicatorView hidesWhenStopped]) is `YES`, the indicator becomes hidden.
-     Or if an indicator's [hidesWhenStopped]([ESTMusicIndicatorView hidesWhenStopped]) is `NO`, the indicator shows idle bars.
+     In this state, if an indicator's` \.hidesWhenStopped` is `true`, the indicator becomes hidden.
+     Or if an indicator's ` \.hidesWhenStopped` is `false`, the indicator shows idle bars.
      */
     case stopped
     

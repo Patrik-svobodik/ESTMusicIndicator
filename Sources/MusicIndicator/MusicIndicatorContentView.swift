@@ -1,6 +1,6 @@
 //
-//  ESTMusicIndicatorContentView.swift
-//  ESTMusicIndicator
+//  MusicIndicatorContentView.swift
+//  MusicIndicator
 //
 //  Created by Aufree on 12/6/15.
 //  Copyright © 2015 The EST Group. All rights reserved.
@@ -25,7 +25,7 @@
 
 import UIKit
 
-class ESTMusicIndicatorContentView: UIView {
+class MusicIndicatorContentView: UIView {
     
     private let kBarCount = 3
     private let kBarWidth:CGFloat = 3.0
@@ -84,17 +84,12 @@ class ESTMusicIndicatorContentView: UIView {
     }
     
     private func horizontalBarSpacing() -> CGFloat {
-        if UIScreen.main.scale == 2.0 {
-            return kRetinaHorizontalBarSpacing
-        } else {
-            return kHorizontalBarSpacing
-        }
+        UIScreen.main.scale == 2.0 ? kRetinaHorizontalBarSpacing : kHorizontalBarSpacing
     }
     
     override func tintColorDidChange() {
-        for layer in barLayers{
-            layer.backgroundColor = tintColor.cgColor
-        }
+        super.tintColorDidChange()
+        barLayers.forEach { $0.backgroundColor = tintColor.cgColor }
     }
     
     override var intrinsicContentSize : CGSize {
@@ -145,11 +140,7 @@ class ESTMusicIndicatorContentView: UIView {
     }
     
     func isOscillating() -> Bool {
-        if let _ = barLayers.first?.animation(forKey: kOscillationAnimationKey) {
-            return true
-        } else {
-            return false
-        }
+        barLayers.first?.animation(forKey: kOscillationAnimationKey) != nil
     }
     
     func startDecay() {
@@ -165,19 +156,19 @@ class ESTMusicIndicatorContentView: UIView {
     }
     
     private func startOscillatingBarLayer(_ layer: CALayer, basePeriod: CFTimeInterval) {
-        // arc4random_uniform() will return a uniformly distributed random number **less** upper_bound.
+        /// arc4random_uniform() will return a uniformly distributed random number less than the upper bound.
         let peakHeight: CGFloat = kBarMinPeakHeight + CGFloat(arc4random_uniform(UInt32(kBarMaxPeakHeight - kBarMinPeakHeight + 1)))
         
-        var fromBouns = layer.bounds;
-        fromBouns.size.height = kBarIdleHeight;
+        var fromBounds = layer.bounds
+        fromBounds.size.height = kBarIdleHeight
         
         var toBounds: CGRect = layer.bounds
         toBounds.size.height = peakHeight
         
         let animation: CABasicAnimation = CABasicAnimation(keyPath: "bounds")
-        animation.fromValue = NSValue(cgRect:fromBouns)
-        animation.toValue = NSValue(cgRect:toBounds)
-        animation.repeatCount = Float.infinity // Forever
+        animation.fromValue = NSValue(cgRect: fromBounds)
+        animation.toValue = NSValue(cgRect: toBounds)
+        animation.repeatCount = .infinity // Forever
         animation.autoreverses = true
         animation.duration = TimeInterval((CGFloat(basePeriod) / 2) * (kBarMaxPeakHeight / peakHeight))
         animation.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeIn)

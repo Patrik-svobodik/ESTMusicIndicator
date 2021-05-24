@@ -1,6 +1,6 @@
 //
-//  ESTMusicIndicatorView.swift
-//  ESTMusicIndicator
+//  MusicIndicatorView.swift
+//  MusicIndicator
 //
 //  Created by Aufree on 12/6/15.
 //  Copyright © 2015 The EST Group. All rights reserved.
@@ -25,18 +25,18 @@
 
 import UIKit
 
-public class ESTMusicIndicatorView: UIView {
+public class MusicIndicatorView: UIView {
 
     /**
      A boolean value that controls whether the receiver is hidden
-     when the state is set to `ESTMusicIndicatorViewStateStopped`.
+     when the state is set to `.stopped`.
      
-     If the value of this property is `YES` (the default),
-     the receiver sets its `hidden` property (`UIView`) to `YES`
-     when receiver’s state is `ESTMusicIndicatorViewStateStopped`.
-     If the value is `NO`, the receiver is shown even when it's stopped.
+     If the value of this property is `true` (the default),
+     the receiver sets its `hidden` property of (`UIView`) to `true`
+     when receiver’s state is `.stopped`.
+     If the value is `false`, the receiver is shown even when it's stopped.
      
-     Note that by setting state `ESTMusicIndicatorViewStatePlaying` or `ESTMusicIndicatorViewStatePaused`
+     Note that by setting state `.playing` or `.paused`
      the receiver will be shown automatically.
      */
     
@@ -53,15 +53,15 @@ public class ESTMusicIndicatorView: UIView {
      
      You can control the receiver's appearance and behavior by setting this property.
      
-     - `ESTMusicIndicatorViewStateStopped`:
-     - If hidesWhenStopped is `YES`, the receiver becomes hidden.
-     - If hidesWhenStopped is `NO`, the receiver shows idle bars (same as `ESTMusicIndicatorViewStatePaused`).
-     - `ESTMusicIndicatorViewStatePlaying`: The receiver shows oscillatory animated bars.
-     - `ESTMusicIndicatorViewStatePaused`: The receiver shows idle bars.
+     - `.stopped`:
+     - If hidesWhenStopped is `true`, the receiver becomes hidden.
+     - If hidesWhenStopped is `false`, the receiver shows idle bars (same as `.paused`).
+     - `.playing`: The receiver shows oscillatory animated bars.
+     - `.paused`: The receiver shows idle bars.
      
-     The initial value is `ESTMusicIndicatorViewStateStopped`.
+     The initial value is `.stopped`.
      */
-    public var state: ESTMusicIndicatorViewState = .stopped {
+    public var state: MusicIndicatorViewState = .stopped {
         didSet {
             if state == .stopped {
                 stopAnimating()
@@ -69,18 +69,14 @@ public class ESTMusicIndicatorView: UIView {
                     isHidden = true
                 }
             } else {
-                if state == .playing {
-                    startAnimating()
-                } else {
-                    stopAnimating()
-                }
+                state == .playing ? startAnimating() : stopAnimating()
                 isHidden = false
             }
         }
     }
     
     private var hasInstalledConstraints = false
-    private lazy var contentView = ESTMusicIndicatorContentView()
+    private lazy var contentView = MusicIndicatorContentView()
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -118,9 +114,7 @@ public class ESTMusicIndicatorView: UIView {
 
     // MARK: Auto Layout
     
-    override open var intrinsicContentSize : CGSize {
-        return contentView.intrinsicContentSize
-    }
+    override open var intrinsicContentSize : CGSize { contentView.intrinsicContentSize }
     
     override open func updateConstraints() {
         if !hasInstalledConstraints {
@@ -145,31 +139,23 @@ public class ESTMusicIndicatorView: UIView {
         super.updateConstraints()
     }
     
-    open override var forFirstBaselineLayout: UIView {
-        return contentView
-    }
+    open override var forFirstBaselineLayout: UIView { contentView }
     
     // MARK: Frame-Based Layout
     
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        return intrinsicContentSize
-    }
+    override open func sizeThatFits(_ size: CGSize) -> CGSize { intrinsicContentSize }
     
     // MARK: Helpers
     
     private func startAnimating() {
-        if contentView.isOscillating() {
-            return
-        }
+        guard !contentView.isOscillating() else { return }
         
         contentView.stopDecay()
         contentView.startOscillation()
     }
     
     private func stopAnimating() {
-        if !contentView.isOscillating() {
-            return
-        }
+        guard contentView.isOscillating() else { return }
         
         contentView.stopOscillation()
         contentView.startDecay()
@@ -179,9 +165,7 @@ public class ESTMusicIndicatorView: UIView {
     private func handleApplicationStateChanged(_ sender: Notification) {
         switch sender.name {
         case UIApplication.willEnterForegroundNotification:
-            guard state == .playing else {
-                break
-            }
+            guard state == .playing else { break }
             startAnimating()
         case UIApplication.didEnterBackgroundNotification:
             stopAnimating()

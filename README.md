@@ -6,9 +6,9 @@
 <a href="https://github.com/Aufree"><img src="https://ga-beacon.appspot.com/UA-70965318-2/ESTMusicIndicator/readme" alt="GA"></a>
 </p>
 
-Cool Animated music indicator view written in Swift.
+Cool animated music indicator view written in Swift.
 
-ESTMusicIndicator is an implementation of [NAKPlaybackIndicatorView](https://github.com/yujinakayama/NAKPlaybackIndicatorView) in Swift for iOS 8.
+MusicIndicator is an implementation of [NAKPlaybackIndicatorView](https://github.com/yujinakayama/NAKPlaybackIndicatorView) in Swift for iOS 8.
 
 > - 本人著作的书籍[《Laravel 入门教程》](https://laravel-china.org/laravel-tutorial/5.1)已正式发布，有兴趣的朋友可点击 [此处](https://laravel-china.org/topics/3383) 作进一步了解。
 
@@ -46,7 +46,7 @@ $ open Example/ESTMusicIndicator.xcodeproj
 SPM is a dependency manager built into Xcode.
 
 ESTMusicIndicator can be installed via Swift Package Manager. To use it in your project, open Xcode, go to menu File -> Swift Packages -> Add Package Dependency, and paste this repo's URL:
-`https://github.com/Aufree/ESTMusicIndicator.git`
+`https://github.com/Patrik-svobodik/MusicIndicator.git`
 
 ### CocoaPods
 
@@ -86,31 +86,31 @@ You can check out [this link](http://www.raywenderlich.com/97014) for more infor
 Simple Example:
 
 ```swift
-let indicator = ESTMusicIndicatorView.init(frame: CGRect.zero)
+let indicator = MusicIndicatorView(frame: .zero)
 indicator.tintColor = .red
 indicator.sizeToFit()
 view.addSubview(indicator)
 ```
 
-Initially the `state` property is ESTMusicIndicatorViewStateStopped and the `hidesWhenStopped` property is YES.
+Initially the `state` property is ESTMusicIndicatorViewStateStopped and the `hidesWhenStopped` property is `true`.
 Thus, the view is hidden at this time.
 
 The view appears and the bars start animation.
 
 ```swift
-indicator.state = .playing;
+indicator.state = .playing
 ```
 
 The bars stop animation and become idle.
 
 ```swift
-indicator.state = .paused;
+indicator.state = .paused
 ```
 
 The view becomes hidden.
 
 ```swift
-indicator.state = .stopped;
+indicator.state = .stopped
 ```
 
 You can use ESTMusicIndicatorView in both code and Storyboard, and it works well with both Auto Layout and frame-based layout.
@@ -118,7 +118,7 @@ You can use ESTMusicIndicatorView in both code and Storyboard, and it works well
 ### Code with Auto Layout
 
 ```swift
-let indicator = ESTMusicIndicatorView.init(frame: CGRect.zero)
+let indicator = ESTMusicIndicatorView(frame: .zero)
 indicator.translatesAutoresizingMaskIntoConstraints = false
 view.addSubview(indicator)
 ```
@@ -130,7 +130,7 @@ It will be automatically resized to fit its content.
 ### Code with Frame-Based Layout
 
 ```swift
-let indicator = ESTMusicIndicatorView.init(frame: CGRect.zero)
+let indicator = ESTMusicIndicatorView(frame: .zero)
 view.addSubview(indicator)
 indicator.sizeToFit() // Resize itself to fit its content.
 ```
